@@ -3,7 +3,9 @@ package edu.upenn.nets150.homework5.kanyelyrics;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class Main {
+import edu.upenn.nets150.homework5.url.URLManager;
+
+public class TweetsMain {
 
 	public static void main(String[] args) throws Exception {
 
