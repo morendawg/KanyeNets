@@ -10,6 +10,12 @@ public class TweetsMain {
 	public static void main(String[] args) throws Exception {
 
 		String kanyeREST = "http://www.kanyerest.xyz/api/album/";
+		
+		String collegeDropout = "the_college_dropout";
+		String lateRegistration = "late_registration";
+		String graduation = "graduation";
+		String heartbreak = "808s_&amp;_heartbreak";
+
 		String myBeautifulDarkTwistedFantasy = "my_beautiful_dark_twisted_fantasy";
 		String watchTheThrone = "watch_the_throne";
 		String yeezus = "yeezus";
@@ -35,10 +41,34 @@ public class TweetsMain {
         kanyeTLOP.sendGet(TLOP);
         TLOP.close();
         
+        URLManager kanyeCD = new URLManager(kanyeREST + collegeDropout);
+		PrintWriter CD = new PrintWriter("the_college_dropout.txt", "UTF-8");
+        kanyeCD.sendGet(CD);
+        CD.close();
+        
+        URLManager kanyeLR = new URLManager(kanyeREST + lateRegistration);
+		PrintWriter LR = new PrintWriter("late_registration.txt", "UTF-8");
+        kanyeLR.sendGet(LR);
+        LR.close();
+        
+        URLManager kanyeGRAD = new URLManager(kanyeREST + graduation);
+		PrintWriter GRAD = new PrintWriter("graduation.txt", "UTF-8");
+        kanyeGRAD.sendGet(GRAD);
+        GRAD.close();
+        
+        URLManager kanye808 = new URLManager(kanyeREST + heartbreak);
+		PrintWriter k808 = new PrintWriter("808s_and_heartbreak.txt", "UTF-8");
+        kanye808.sendGet(k808);
+        k808.close();
+        
         Document d1 = new Document("my_beautiful_dark_twisted_fantasy.txt");
 		Document d2 = new Document("watch_the_throne.txt");
 		Document d3 = new Document("yeezus.txt");
 		Document d4 = new Document("the_life_of_pablo.txt");
+		Document d5 = new Document("the_college_dropout.txt");
+		Document d6 = new Document("late_registration.txt");
+		Document d7 = new Document("graduation.txt");
+		Document d8 = new Document("808s_and_heartbreak.txt");
 
 		
 		ArrayList<Document> documents = new ArrayList<Document>();
@@ -46,6 +76,11 @@ public class TweetsMain {
 		documents.add(d2);
 		documents.add(d3);
 		documents.add(d4);
+		documents.add(d5);
+		documents.add(d6);
+		documents.add(d7);
+		documents.add(d8);
+
 
 		Corpus corpus = new Corpus(documents);
 		

@@ -5,9 +5,7 @@ import java.util.TreeSet;
 
 public class GrammyMain {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+	public static void main(String[] args) {		
 		String kanyeAwards = "http://www.imdb.com/name/nm1577190/awards";
 		JSoupQuery jSoupQuery = new JSoupQuery(kanyeAwards);
 		TreeMap<String, TreeMap<String, TreeSet<PersonURL>>> masterData = jSoupQuery.getMasterData();
