@@ -32,11 +32,7 @@ public class TwitterScrape {
 	    String user = "kanyewest";
 	    ArrayList<ResponseList<Status>> statuses = new ArrayList<ResponseList<Status>>();
 	    StringBuilder spaceSeparated = new StringBuilder();
-//	    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("kanyeTweets.txt", true)));
-	   
 	    
-	    while (true) {
-
 	      try {
 	    	// Number of tweets from Kanye  
 	        int size = statuses.size(); 
@@ -45,23 +41,25 @@ public class TwitterScrape {
 	        // Adds all Tweets on page from Kanye to statuses
 	        statuses.add(twitter.getUserTimeline(user, page));
 	        
-	        for(Object s : statuses){
-	        	spaceSeparated.append(s.toString().replaceAll("'", ""));
-	        }
-	        
-	        // Breaks while loop if end of status is reached.
-	        if (statuses.size() == size)
-		          break;
+	        for(ResponseList<Status> s : statuses){
+	        	for (Status status : s) {
+		        	spaceSeparated.append(status.getText() + "\n");
+	        	}
+	        }   
+        	System.out.print(spaceSeparated);
+	        // Breaks while loop if end of statuses is reached.
+//	        if (statuses.size() == size)
+//		          break;
 	        
 	        // Pattern-matches for actual tweets from source
 	        for(int i=1; i<statuses.size(); i++){
-	        	Pattern r = Pattern.compile("((?<=text=).*?(?=, source))");
+	        	Pattern r = Pattern.compile("((?<=text=').*?(?=', source))");
 				String source = spaceSeparated.toString();
 				Matcher m = r.matcher(source);
 				
 				// For every tweet, writes into file kanyeTweets.txt
 				while (m.find()){
-//					System.out.println(m.group(1)); // prints out all tweets
+					System.out.println(spaceSeparated);
 					
 					try(FileWriter fw = new FileWriter("kanyeTweets.txt", true);
 						    BufferedWriter bw = new BufferedWriter(fw);
@@ -84,4 +82,4 @@ public class TwitterScrape {
 	  
 	}
 	
-}
+
