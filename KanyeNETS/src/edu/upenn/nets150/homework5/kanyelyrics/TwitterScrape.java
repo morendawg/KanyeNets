@@ -2,8 +2,6 @@ package edu.upenn.nets150.homework5.kanyelyrics;
 import java.util.*;
 import twitter4j.*;
 import twitter4j.conf.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -13,73 +11,58 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+
 
 //You'll need a ConsumerKey, ConsumerSecret AccessToken, and AccessTokenSecret from Twitter Apps
 public class TwitterScrape {
 
 	public static void main(String[] a) throws IOException {
 
-	    ConfigurationBuilder cb = new ConfigurationBuilder();
-	    cb.setOAuthConsumerKey("b8nRrNvy5K07C9cnqSw6xu8jw");
-	    cb.setOAuthConsumerSecret("LcJE1QlYA8h8IhRiaSxNqWTLrV3i3DMgJS1XxfkPRPRayVZ4MF");
-	    cb.setOAuthAccessToken("44753779-Qj5WTrXRK2cEVyHNixGLX6loojswBD8w9l789wqpK");
-	    cb.setOAuthAccessTokenSecret("UVYTXbxAjQbpIK0XPKtSEsIkH9ZbYc4TYEK5ZBxFjjRKU");
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+		cb.setOAuthConsumerKey("KNZdZiyvIuI8Bdw1jCfjWBK4O");
+		cb.setOAuthConsumerSecret("AfSY7WiVPx4FEE9rGVeZK1lDwHYQfys9ki1vHllihm7FoY8WzF");
+		cb.setOAuthAccessToken("1255797912-s2TVSBqB8lHE29AUPKGVZsoIgz9p08gn4Uz8Obv");
+		cb.setOAuthAccessTokenSecret("WdDK8LnUKmHQlpsT8zPp1F4FVy6qzDLu8x3bxgUB3PW7m");
 
-	    Twitter twitter = new TwitterFactory(cb.build()).getInstance();
+		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 
-	    int pageno = 1;
-	    String user = "kanyewest";
-	    ArrayList<ResponseList<Status>> statuses = new ArrayList<ResponseList<Status>>();
-	    StringBuilder spaceSeparated = new StringBuilder();
-	    
-	      try {
-	    	// Number of tweets from Kanye  
-	        int size = statuses.size(); 
-	        // Goes to next page of Tweets
-	        Paging page = new Paging(pageno++, 100);
-	        // Adds all Tweets on page from Kanye to statuses
-	        statuses.add(twitter.getUserTimeline(user, page));
-	        
-	        for(ResponseList<Status> s : statuses){
-	        	for (Status status : s) {
-		        	spaceSeparated.append(status.getText() + "\n");
-	        	}
-	        }   
-        	System.out.print(spaceSeparated);
-	        // Breaks while loop if end of statuses is reached.
-//	        if (statuses.size() == size)
-//		          break;
-	        
-	        // Pattern-matches for actual tweets from source
-	        for(int i=1; i<statuses.size(); i++){
-	        	Pattern r = Pattern.compile("((?<=text=').*?(?=', source))");
-				String source = spaceSeparated.toString();
-				Matcher m = r.matcher(source);
-				
-				// For every tweet, writes into file kanyeTweets.txt
-				while (m.find()){
-					System.out.println(spaceSeparated);
-					
-					try(FileWriter fw = new FileWriter("kanyeTweets.txt", true);
-						    BufferedWriter bw = new BufferedWriter(fw);
-						    PrintWriter out = new PrintWriter(bw))
-						{
-						    out.println(m.group(1));
-						} catch (IOException e) {
-						}	
-				}
-	        }
-	        
-	      }
-	      catch(TwitterException e) {
+		int pageno = 1;
+		String user = "kanyewest";
+		ArrayList<Status> statuses = new ArrayList<Status>();
+		StringBuilder spaceSeparated = new StringBuilder();
 
-	        e.printStackTrace();
-	      }
-	    }
-	    
-	    
-	  
+		// Gets the Tweet elements from Kanye's profile
+		try {
+			ResponseList<Status> statusesList;
+			do {
+				Paging page = new Paging(pageno,320);
+				// Adds all Tweets on page from Kanye to statuses
+				statusesList = twitter.getUserTimeline(user, page);
+				statuses.addAll(statusesList);
+				++pageno;
+			} while (!statusesList.isEmpty());
+		}
+		catch (TwitterException te) {
+			System.out.println("Couldn't connect: " + te);
+		}; 
+		
+		// Splits the Tweet elements into a String, separated by new lines
+        for(Status s : statuses){
+	        	spaceSeparated.append(s.getText() + "\n");
+        	}
+			
+		// Writes all the Tweets into file kanyeTweets.txt
+		try(FileWriter fw = new FileWriter("kanyeTweets.txt", true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw))
+		{
+			out.println(spaceSeparated);
+		} catch (IOException e) {
+		}	
 	}
-	
+
+}
+
+
+
 

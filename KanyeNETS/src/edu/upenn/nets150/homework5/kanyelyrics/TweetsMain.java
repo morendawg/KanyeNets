@@ -15,7 +15,7 @@ public class TweetsMain {
 		String lateRegistration = "late_registration";
 		String graduation = "graduation";
 		String heartbreak = "808s_&amp;_heartbreak";
-
+		
 		String myBeautifulDarkTwistedFantasy = "my_beautiful_dark_twisted_fantasy";
 		String watchTheThrone = "watch_the_throne";
 		String yeezus = "yeezus";
@@ -61,6 +61,7 @@ public class TweetsMain {
         kanye808.sendGet(k808);
         k808.close();
         
+        Document d0 = new Document("./kanyeTweets.txt");
         Document d1 = new Document("my_beautiful_dark_twisted_fantasy.txt");
 		Document d2 = new Document("watch_the_throne.txt");
 		Document d3 = new Document("yeezus.txt");
@@ -69,9 +70,9 @@ public class TweetsMain {
 		Document d6 = new Document("late_registration.txt");
 		Document d7 = new Document("graduation.txt");
 		Document d8 = new Document("808s_and_heartbreak.txt");
-
 		
 		ArrayList<Document> documents = new ArrayList<Document>();
+		documents.add(d0);
 		documents.add(d1);
 		documents.add(d2);
 		documents.add(d3);
