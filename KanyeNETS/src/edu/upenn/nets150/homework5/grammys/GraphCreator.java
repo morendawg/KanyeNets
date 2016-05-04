@@ -1,12 +1,9 @@
 package edu.upenn.nets150.homework5.grammys;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 
 public class GraphCreator {
@@ -17,16 +14,13 @@ public class GraphCreator {
 	//Map linking Strings to Person objects
 	private static Map<String, Person> foundPersons;
 
-	public GraphCreator(TreeMap<String,TreeMap<String, TreeSet<PersonURL>>> input) {
+	public GraphCreator(Map<String, Map<String, ArrayList<String>>> input) {
 		
 		if (input == null) {
 			System.out.println("input list is null");
 		}
 		
-		personGraph = new ArrayList<Person>();
-		foundPersons = new TreeMap<String, Person>();
-		
-		for (Entry<String, TreeMap<String, TreeSet<PersonURL>>> personEntry : input.entrySet()) {
+		for (Entry<String, Map<String, ArrayList<String>>> personEntry : input.entrySet()) {
 			
 			Person person = null;
 			
@@ -40,18 +34,14 @@ public class GraphCreator {
 			}
 			
 			//Add collabs to each Person
-			Map<String, TreeSet<PersonURL>> songMap = personEntry.getValue();
-			for (Entry<String, TreeSet<PersonURL>> songEntry : songMap.entrySet()) {
+			Map<String, ArrayList<String>> songMap = personEntry.getValue();
+			for (Entry<String, ArrayList<String>> songEntry : songMap.entrySet()) {
 				
 				//song name
 				String songString = songEntry.getKey();
 				
 				//list of collaborators
-				TreeSet<PersonURL> urlSet = songEntry.getValue();
-				ArrayList<String> collabList = new ArrayList<String>();
-				for (PersonURL pURL : urlSet) {
-					collabList.add(pURL.getName());
-				}
+				ArrayList<String> collabList = songEntry.getValue();
 				
 				//iterate through list of collaborators
 				for (String collabString : collabList) {
@@ -60,35 +50,15 @@ public class GraphCreator {
 					if (!foundPersons.keySet().contains(collabString)) {
 						Person collabPerson = new Person(collabString);
 						person.addCollab(collabPerson);
-						collabPerson.addCollab(person);
 						
 					//if person has already been encountered
 					} else {
 						person.addCollab(foundPersons.get(collabString));
-						foundPersons.get(collabString).addCollab(person);
 					}
 					
 				}
 				
 			}
-			
-		}
-		
-	}
-	
-	public void printGraph() {
-		
-		for (Person p : personGraph) {
-			
-			System.out.println("Name: " + p.getName());
-			for (Entry<Person, Integer> e : p.getCollabs().entrySet()) {
-				
-				String collabString = e.getKey().getName();
-				int collabCount = e.getValue();
-				System.out.println("Collaborator: " + collabString + " [" + collabCount + "]");
-				
-			}
-			System.out.println();
 			
 		}
 		
