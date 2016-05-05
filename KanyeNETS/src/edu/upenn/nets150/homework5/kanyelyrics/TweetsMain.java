@@ -9,18 +9,28 @@ public class TweetsMain {
 
 	public static void main(String[] args) throws Exception {
 
+		/**
+		 * Base query for the RESTful API
+		 */
+		
 		String kanyeREST = "http://www.kanyerest.xyz/api/album/";
 		
+		/**
+		 * URL extensions for each album
+		 */
 		String collegeDropout = "the_college_dropout";
 		String lateRegistration = "late_registration";
 		String graduation = "graduation";
 		String heartbreak = "808s_&amp;_heartbreak";
-		
 		String myBeautifulDarkTwistedFantasy = "my_beautiful_dark_twisted_fantasy";
 		String watchTheThrone = "watch_the_throne";
 		String yeezus = "yeezus";
 		String lifeOfPablo = "the_life_of_pablo";
 
+		
+		/**
+		 * Send get requests to RESTful API and generate text files for each album
+		 */
 		URLManager kanyeMBDTF = new URLManager(kanyeREST + myBeautifulDarkTwistedFantasy);
 		PrintWriter MBDTF = new PrintWriter("my_beautiful_dark_twisted_fantasy.txt", "UTF-8");
         kanyeMBDTF.sendGet(MBDTF);
@@ -61,6 +71,10 @@ public class TweetsMain {
         kanye808.sendGet(k808);
         k808.close();
         
+        /**
+         * Create corpus of documents
+         */
+        
         Document d0 = new Document("./kanyeTweets.txt");
         Document d1 = new Document("my_beautiful_dark_twisted_fantasy.txt");
 		Document d2 = new Document("watch_the_throne.txt");
@@ -87,6 +101,9 @@ public class TweetsMain {
 		
 		VectorSpaceModel vectorSpace = new VectorSpaceModel(corpus);
 		
+		/**
+		 * Run cosine similarity on the elements of the corpus
+		 */
 		
 		for (int i = 0; i < documents.size(); i++) {
 			for (int j = i + 1; j < documents.size(); j++) {
