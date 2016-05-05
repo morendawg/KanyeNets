@@ -34,9 +34,13 @@ public class GraphCreator {
 			String personString = personEntry.getKey();
 			if (!foundPersons.keySet().contains(personString)) {
 				person = new Person(personString);
-				personGraph.add(person);
-			} else {
+				personGraph.add(person);	
+				foundPersons.put(personString, person);
+		    } else {
 				person = foundPersons.get(personString);
+				if (!personGraph.contains(person)) {
+					personGraph.add(person);
+				}
 			}
 			
 			//Add collabs to each Person
@@ -59,13 +63,12 @@ public class GraphCreator {
 					//if person has not been encountered yet
 					if (!foundPersons.keySet().contains(collabString)) {
 						Person collabPerson = new Person(collabString);
+						foundPersons.put(collabString, collabPerson);
 						person.addCollab(collabPerson);
-						collabPerson.addCollab(person);
 						
 					//if person has already been encountered
 					} else {
 						person.addCollab(foundPersons.get(collabString));
-						foundPersons.get(collabString).addCollab(person);
 					}
 					
 				}
