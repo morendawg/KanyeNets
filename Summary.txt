@@ -1,0 +1,25 @@
+My Beautiful Dark Twisted Triadic Closure
+
+Empirical Analysis
+
+—— Project Description ——
+Our final project is broken down into two parts: 
+1) Twitter and Album Lyric Originality Analysis 
+2) Grammy Network Analysis
+
+Twitter and Album Lyric Analysis 
+
+Category Used: Document Search/IR
+This part of the project scrapes Kanye’s Twitter and a lyrics database for all of Kanye’s song lyrics. To scrape Kanye’s Twitter profile, we used the Twitter4j library. We then used the Vector Space Model to compare tweets and album lyrics, and album lyrics with other album lyrics. 
+
+
+Grammy Network Analysis 
+Category Used: Graph and Graph Algorithms
+This part of the project also used web scraping to find all of Kanye’s collaborators for his Grammy nominations. It then creates a graph using a custom graph implementation and then we ran a neighborhood overlap analysis on the data.
+
+—— Work Breakdown —— 
+
+Daniel Moreno - Web scraping for lyrics and for the collaboration databases. (GrammyMain.java, JSoupQuery.java, TweetsMain.java, PersonURL.java, URLManager.java)
+Connor Swords - Parsing data extracted from the web in order to create Person objects and build the graph. (GraphCreator.java, Person.java)
+Serena Tsay - TwitterScrape.java, summary report diagrams and writeup
+Connor Wen - Neighborhood overlap calculations and summary report writeup.
