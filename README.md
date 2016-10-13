@@ -1,4 +1,5 @@
 # KanyeNets - My Beautiful Dark Twisted Triadic Closure
+## NETS 150 (Market and Social Systems on the Internet)
 ### NETS 150 Final Project
 ### Daniel Moreno, Serena Tsay, Connor Swords, Connor Wen
 
