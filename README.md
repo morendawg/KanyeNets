@@ -13,4 +13,4 @@ We also used web scraping methods to collect all of Kanye’s collaborators for 
 
 The [pdf](/My Beautiful Dark Twisted Triadic Closure.pdf) outlines the analyses and discoveries made in analyzing our model.
 
-[cover](/Cover.png)
+![cover](/Cover.png)
